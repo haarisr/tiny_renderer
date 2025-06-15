@@ -10,6 +10,11 @@ constexpr TGAColor yellow = {0, 200, 255, 255};
 void line(int ax, int ay, int bx, int by, TGAImage &image,
           const TGAColor &color) {
 
+  if (ax > bx) {
+    std::swap(ax, bx);
+    std::swap(ay, by);
+  }
+
   for (int start = ax; start <= bx; ++start) {
     float t = (start - ax) / static_cast<float>(bx - ax);
     int x = std::round(ax + (bx - ax) * t);
