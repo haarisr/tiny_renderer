@@ -7,6 +7,15 @@ constexpr TGAColor red = {0, 0, 255, 255};
 constexpr TGAColor blue = {255, 128, 64, 255};
 constexpr TGAColor yellow = {0, 200, 255, 255};
 
+void line(int ax, int ay, int bx, int by, TGAImage &image,
+          const TGAColor &color) {
+  for (float t = 0; t < 1; t += 0.01f) {
+    int x = std::round(ax + (bx - ax) * t);
+    int y = std::round(ay + (by - ay) * t);
+    image.set(x, y, color);
+  }
+}
+
 int main(int argc, char **argv) {
   constexpr int width = 64;
   constexpr int height = 64;
@@ -16,23 +25,10 @@ int main(int argc, char **argv) {
   int bx = 12, by = 37;
   int cx = 62, cy = 53;
 
-  for (float t = 0; t < 1; t += 0.02f) {
-    int x = std::round(ax * (1 - t) + bx * t);
-    int y = std::round(ay * (1 - t) + by * t);
-    framebuffer.set(x, y, blue);
-
-    x = std::round(cx * (1 - t) + bx * t);
-    y = std::round(cy * (1 - t) + by * t);
-    framebuffer.set(x, y, green);
-
-    x = std::round(cx * (1 - t) + ax * t);
-    y = std::round(cy * (1 - t) + ay * t);
-    framebuffer.set(x, y, yellow);
-
-    x = std::round(ax * (1 - t) + cx * t);
-    y = std::round(ay * (1 - t) + cy * t);
-    framebuffer.set(x, y, red);
-  }
+  line(ax, ay, bx, by, framebuffer, blue);
+  line(cx, cy, bx, by, framebuffer, green);
+  line(cx, cy, ax, ay, framebuffer, yellow);
+  line(ax, ay, cx, cy, framebuffer, red);
 
   framebuffer.set(ax, ay, white);
   framebuffer.set(bx, by, white);
