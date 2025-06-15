@@ -9,7 +9,9 @@ constexpr TGAColor yellow = {0, 200, 255, 255};
 
 void line(int ax, int ay, int bx, int by, TGAImage &image,
           const TGAColor &color) {
-  for (float t = 0; t < 1; t += 0.01f) {
+
+  for (int start = ax; start <= bx; ++start) {
+    float t = (start - ax) / static_cast<float>(bx - ax);
     int x = std::round(ax + (bx - ax) * t);
     int y = std::round(ay + (by - ay) * t);
     image.set(x, y, color);
