@@ -21,15 +21,14 @@ void line(int ax, int ay, int bx, int by, TGAImage &image,
     std::swap(ay, by);
   }
 
-  for (int start = ax; start <= bx; ++start) {
-    float t = (start - ax) / static_cast<float>(bx - ax);
-    int x = std::round(ax + (bx - ax) * t);
-    int y = std::round(ay + (by - ay) * t);
+  float y = ay;
+  for (int x = ax; x <= bx; ++x) {
     if (steep) {
       image.set(y, x, color);
     } else {
       image.set(x, y, color);
     }
+    y += (by - ay) / static_cast<float>(bx - ax);
   }
 }
 
