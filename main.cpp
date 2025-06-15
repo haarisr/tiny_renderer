@@ -16,6 +16,24 @@ int main(int argc, char **argv) {
   int bx = 12, by = 37;
   int cx = 62, cy = 53;
 
+  for (float t = 0; t < 1; t += 0.02f) {
+    int x = std::round(ax * (1 - t) + bx * t);
+    int y = std::round(ay * (1 - t) + by * t);
+    framebuffer.set(x, y, blue);
+
+    x = std::round(cx * (1 - t) + bx * t);
+    y = std::round(cy * (1 - t) + by * t);
+    framebuffer.set(x, y, green);
+
+    x = std::round(cx * (1 - t) + ax * t);
+    y = std::round(cy * (1 - t) + ay * t);
+    framebuffer.set(x, y, yellow);
+
+    x = std::round(ax * (1 - t) + cx * t);
+    y = std::round(ay * (1 - t) + cy * t);
+    framebuffer.set(x, y, red);
+  }
+
   framebuffer.set(ax, ay, white);
   framebuffer.set(bx, by, white);
   framebuffer.set(cx, cy, white);
