@@ -10,6 +10,12 @@ constexpr TGAColor yellow = {0, 200, 255, 255};
 void line(int ax, int ay, int bx, int by, TGAImage &image,
           const TGAColor &color) {
 
+  bool steep = std::abs(by - ay) > std::abs(bx - ax);
+  if (steep) {
+    std::swap(ax, ay);
+    std::swap(bx, by);
+  }
+
   if (ax > bx) {
     std::swap(ax, bx);
     std::swap(ay, by);
@@ -19,7 +25,11 @@ void line(int ax, int ay, int bx, int by, TGAImage &image,
     float t = (start - ax) / static_cast<float>(bx - ax);
     int x = std::round(ax + (bx - ax) * t);
     int y = std::round(ay + (by - ay) * t);
-    image.set(x, y, color);
+    if (steep) {
+      image.set(y, x, color);
+    } else {
+      image.set(x, y, color);
+    }
   }
 }
 
