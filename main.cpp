@@ -30,12 +30,13 @@ void line(int ax, int ay, int bx, int by, TGAImage &image,
       image.set(x, y, color);
     }
     ierror += 2 * std::abs(by - ay);
-    if (ierror > (bx - ax)) {
-      y += (by > ay) ? 1 : -1; // increment or decrement y based on direction
-      ierror -= 2 * (bx - ax);
-    }
+    int correction = (ierror > (bx - ax));
+    y += ((by > ay) ? 1 : -1) * correction;
+    ierror -= 2 * (bx - ax) * correction;
   }
 }
+
+
 
 int main(int argc, char **argv) {
   constexpr int width = 64;
