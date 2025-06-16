@@ -22,17 +22,17 @@ void line(int ax, int ay, int bx, int by, TGAImage &image,
   }
 
   int y = ay;
-  float error = 0.0f;
+  int ierror = 0;
   for (int x = ax; x <= bx; ++x) {
     if (steep) {
       image.set(y, x, color);
     } else {
       image.set(x, y, color);
     }
-    error += std::abs(by - ay) / static_cast<float>(bx - ax);
-    if (error >= 0.5f) {
+    ierror += 2 * std::abs(by - ay);
+    if (ierror > (bx - ax)) {
       y += (by > ay) ? 1 : -1; // increment or decrement y based on direction
-      error -= 1.0f;
+      ierror -= 2 * (bx - ax);
     }
   }
 }
