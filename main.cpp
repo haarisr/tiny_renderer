@@ -21,14 +21,19 @@ void line(int ax, int ay, int bx, int by, TGAImage &image,
     std::swap(ay, by);
   }
 
-  float y = ay;
+  int y = ay;
+  float error = 0.0f;
   for (int x = ax; x <= bx; ++x) {
     if (steep) {
       image.set(y, x, color);
     } else {
       image.set(x, y, color);
     }
-    y += (by - ay) / static_cast<float>(bx - ax);
+    error += std::abs(by - ay) / static_cast<float>(bx - ax);
+    if (error >= 0.5f) {
+      y += (by > ay) ? 1 : -1; // increment or decrement y based on direction
+      error -= 1.0f;
+    }
   }
 }
 
